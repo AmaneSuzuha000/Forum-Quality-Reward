@@ -1,0 +1,7 @@
+numpy>=1.26
+pandas>=2.1
+pyarrow>=14.0
+scipy>=1.11
+scikit-learn>=1.3
+psycopg2-binary>=2.9
+aiotieba>=4.4

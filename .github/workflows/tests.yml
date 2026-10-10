@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest ruff
+
+      - name: 代码风格检查
+        run: ruff check .
+
+      - name: 算法自检与契约测试
+        # 不依赖数据库，全部用合成数据
+        run: pytest -q
+
+      - name: 端到端示例
+        run: python examples/demo_reward_round.py

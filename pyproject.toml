@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forum-quality-reward"
+version = "1.0.0"
+description = "Content-quality scoring and tiered reward allocation for long-horizon forums."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+keywords = ["forum", "content-quality", "ranking", "reward", "integrity-gate"]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Text Processing :: Indexing",
+]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "scripts/reward"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+# 显式声明规则集：不声明等于打开默认全集，会让 CI 结果不可预期。
+select = ["E", "F", "W", "I", "UP", "B", "C4", "RUF"]
+ignore = [
+  "E501",    # 行宽由 line-length 统一处理
+  "E701",    # 允许 if x: y —— 紧凑写法在 ETL 与测试里更好读
+  "E702",
+  "UP009",   # 保留 UTF-8 编码声明：这些脚本在 Windows 上被多种工具打开
+  "UP031",   # 允许 % 格式化：表格式的对齐输出用它比 f-string 更整齐
+  "RUF001",  # 中文标点在注释与文档里是有意的，不是拼写错误
+  "RUF002",
+  "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# 脚本需要在 sys.path 插入之后再导入，E402 是结构性的而非疏忽
+"scripts/**/*.py" = ["E402"]
+"tests/**/*.py" = ["E402"]
+"examples/**/*.py" = ["E402"]
