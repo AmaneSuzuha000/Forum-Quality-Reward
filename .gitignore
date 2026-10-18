@@ -1,0 +1,31 @@
+# 数据与产物
+data/
+output/
+*.parquet
+*.jsonl
+*.db
+*.sqlite
+
+# 配置与凭据
+config/config.toml
+.env
+
+# 缓存与构建产物
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+.deepeval/
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
